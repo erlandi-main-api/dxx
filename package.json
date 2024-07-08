@@ -1,0 +1,18 @@
+{
+  "name": "live-command-output",
+  "version": "1.0.0",
+  "description": "A Node.js web service that runs shell commands and displays live output",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "ws": "^7.4.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
